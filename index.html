@@ -232,13 +232,15 @@
                 const icon = header.querySelector('i');
 
                 header.addEventListener('click', () => {
+                    const wasOpen = content.classList.contains('open');
+
                     // Close other open accordions
                     accordionItems.forEach(otherItem => {
                         if (otherItem !== item) {
                             const otherContent = otherItem.querySelector('.accordion-content');
-                            const otherIcon = otherItem.querySelector('.accordion-header i');
                             if (otherContent.classList.contains('open')) {
                                 otherContent.classList.remove('open');
+                                const otherIcon = otherItem.querySelector('.accordion-header i');
                                 otherIcon.classList.remove('fa-minus');
                                 otherIcon.classList.add('fa-plus');
                                 otherIcon.style.transform = 'rotate(0deg)';
@@ -252,6 +254,25 @@
                     icon.classList.toggle('fa-plus', !isOpen);
                     icon.classList.toggle('fa-minus', isOpen);
                     icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+
+                    // If an item was just opened, intelligently scroll it into view
+                    if (!wasOpen && isOpen) {
+                        setTimeout(() => {
+                            const itemRect = item.getBoundingClientRect();
+                            const footer = document.querySelector('footer');
+                            const footerHeight = footer ? footer.offsetHeight : 80;
+                            const viewportHeight = window.innerHeight;
+
+                            // Check if the bottom of the expanded item is below the top of the footer
+                            if (itemRect.bottom > (viewportHeight - footerHeight)) {
+                                const scrollAmount = itemRect.bottom - (viewportHeight - footerHeight) + 20; // 20px buffer
+                                window.scrollBy({
+                                    top: scrollAmount,
+                                    behavior: 'smooth'
+                                });
+                            }
+                        }, 350); // Delay to allow the CSS transition to begin
+                    }
                 });
             });
 
