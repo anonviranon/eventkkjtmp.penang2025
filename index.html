@@ -20,31 +20,22 @@
         }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* A very light gray, almost white */
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Blurred gradient background for depth */
-        body::before {
-            content: '';
+        /* Background Video Styling */
+        #bg-video {
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(63, 94, 251, 0.1), rgba(252, 70, 107, 0.1), transparent 40%);
-            filter: blur(100px);
-            z-index: -1;
-            animation: background-pan 30s linear infinite;
-        }
-
-        @keyframes background-pan {
-            0% { transform: translate(10%, 10%); }
-            25% { transform: translate(-10%, 10%); }
-            50% { transform: translate(-10%, -10%); }
-            75% { transform: translate(10%, -10%); }
-            100% { transform: translate(10%, 10%); }
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -100;
+            object-fit: cover;
+            filter: brightness(0.9); /* Slightly darken video to improve text readability */
         }
 
         .main-container {
@@ -56,7 +47,7 @@
         
         /* Frosted glass effect for components */
         .frosted-glass {
-            background-color: rgba(255, 255, 255, 0.75);
+            background-color: rgba(255, 255, 255, 0.6); /* Slightly more transparent for video background */
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(209, 213, 219, 0.3);
@@ -97,6 +88,12 @@
     </style>
 </head>
 <body class="antialiased text-gray-800">
+
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="assets/bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
     <!-- Main Content Container -->
     <div class="main-container p-4 md:p-6">
