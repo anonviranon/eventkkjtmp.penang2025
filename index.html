@@ -14,18 +14,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Custom styles for a clean look and feel */
+        /* --- iOS Mirror Finish Styles --- */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Light gray background */
+            background-color: #f3f4f6; /* A very light gray, almost white */
+            position: relative;
+            overflow-x: hidden;
         }
+
+        /* Blurred gradient background for depth */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(63, 94, 251, 0.1), rgba(252, 70, 107, 0.1), transparent 40%);
+            filter: blur(100px);
+            z-index: -1;
+            animation: background-pan 30s linear infinite;
+        }
+
+        @keyframes background-pan {
+            0% { transform: translate(10%, 10%); }
+            25% { transform: translate(-10%, 10%); }
+            50% { transform: translate(-10%, -10%); }
+            75% { transform: translate(10%, -10%); }
+            100% { transform: translate(10%, 10%); }
+        }
+
         .main-container {
             max-width: 800px;
             margin: 0 auto;
-            /* Increased padding-bottom for more space above the footer */
-            padding-bottom: 240px; 
+            /* Further increased padding-bottom for more space above the footer */
+            padding-bottom: 320px; 
         }
-        /* Style for the accordion content for smooth transition */
+        
+        /* Frosted glass effect for components */
+        .frosted-glass {
+            background-color: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(209, 213, 219, 0.3);
+        }
+
+        /* Accordion styles */
+        .accordion-item {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -35,12 +72,24 @@
             max-height: 1000px; /* A large enough value */
             transition: max-height 1s cubic-bezier(1, 0, 1, 0), padding 0.3s ease-in-out;
         }
+
         /* Modal styles */
         .modal-backdrop {
             transition: opacity 0.3s ease-in-out;
         }
         .modal-content {
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Glowing effect for the button */
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px #ec4899, 0 0 10px #ec4899; }
+            50% { box-shadow: 0 0 20px #ec4899, 0 0 30px #ec4899; }
+            100% { box-shadow: 0 0 5px #ec4899, 0 0 10px #ec4899; }
+        }
+        .glowing-button {
+            animation: glowing 2.5s infinite;
         }
     </style>
 </head>
@@ -51,7 +100,6 @@
 
         <!-- Header: Logo and Title -->
         <header class="text-center py-8">
-            <!-- Logo updated to use the kkjmp.png image -->
             <img src="assets/kkjmp.png" alt="Event Logo" class="mx-auto h-20 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x80/e2e8f0/333?text=Logo';">
             <h1 class="text-2xl font-bold text-gray-900 mt-4">PROGRAM LATIHAN DAN STRATEGI & SOLIDARITI</h1>
             <p class="text-lg text-gray-600 mt-2">MEMPERKUAT KESATUAN UNTUK MASA DEPAN</p>
@@ -60,7 +108,7 @@
         <!-- Accordion Section for Subjects -->
         <main class="space-y-4 mt-8">
             <!-- Accordion Item 1 -->
-            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
                 <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
                     <h2 class="text-xl font-semibold text-gray-800">Mesyuarat Agong Dwi Tahunan Kesatuan Kebangsaan Juruteknologi Makmal Perubatan</h2>
                     <i class="fas fa-plus transition-transform duration-300"></i>
@@ -75,7 +123,7 @@
             </div>
 
             <!-- Accordion Item 2 -->
-            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
                 <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
                     <h2 class="text-xl font-semibold text-gray-800">Kursus : STRATEGI & SOLIDARITI: MEMPERKUAT KESATUAN UNTUK MASA DEPAN</h2>
                     <i class="fas fa-plus transition-transform duration-300"></i>
@@ -90,16 +138,17 @@
             </div>
 
             <!-- Accordion Item 3 -->
-            <div class="accordion-item bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
                 <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
                     <h2 class="text-xl font-semibold text-gray-800">Night Gala "The Kenduri"</h2>
                     <i class="fas fa-plus transition-transform duration-300"></i>
                 </button>
                 <div class="accordion-content">
-                    <div class="p-5 pt-0 text-gray-700">
-                        <p>For our out-of-town guests, we have reserved a block of rooms at a discounted rate at the nearby hotel. Please mention our event when booking. We've also included travel information to help you get here smoothly.</p>
-                        <p class="mt-2"><strong>Hotel:</strong> The Downtown Plaza Hotel</p>
-                        <p><strong>Booking Code:</strong> EVENT2025</p>
+                    <div class="p-5 pt-2">
+                        <a href="https://anonviranon.github.io/bgm/" target="_blank" rel="noopener noreferrer" 
+                           class="glowing-button block w-full bg-gradient-to-r from-pink-500 via-purple-600 to-black text-white font-bold py-3 px-4 rounded-lg text-center transition-transform hover:scale-105">
+                            Enter The Kenduri
+                        </a>
                     </div>
                 </div>
             </div>
@@ -107,7 +156,7 @@
     </div>
 
     <!-- Bottom Icon Bar -->
-    <footer class="fixed bottom-0 left-0 right-0 bg-white shadow-t-lg border-t border-gray-200">
+    <footer class="fixed bottom-0 left-0 right-0 frosted-glass">
         <div class="max-w-md mx-auto flex justify-around items-center h-20">
             <!-- Navigation Icon -->
             <button id="nav-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
@@ -130,7 +179,7 @@
     <!-- Modals -->
     <!-- Navigation Modal -->
     <div id="nav-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
+        <div class="frosted-glass rounded-xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
             <h3 class="text-xl font-bold mb-4">Get Directions</h3>
             <p class="text-gray-600 mb-6">Open location in your favorite maps app.</p>
             <div class="space-y-3">
@@ -144,7 +193,7 @@
 
     <!-- RSVP Modal -->
     <div id="rsvp-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="bg-white rounded-xl shadow-2xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
+        <div class="frosted-glass rounded-xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
             <h3 class="text-xl font-bold mb-4">RSVP for Events</h3>
             <p class="text-gray-600 mb-6">Please let us know if you can make it!</p>
             <div class="space-y-3">
@@ -159,7 +208,7 @@
 
     <!-- Tentative Modal -->
     <div id="tentative-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="bg-white rounded-xl shadow-2xl w-[90vw] h-[90vh] flex flex-col relative modal-content transform scale-95 opacity-0">
+        <div class="frosted-glass rounded-xl w-[90vw] h-[90vh] flex flex-col relative modal-content transform scale-95 opacity-0">
             <!-- Close button for the tentative modal -->
             <button id="close-tentative-modal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 z-10 bg-white/70 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center transition-colors">
                 <i class="fas fa-times text-xl"></i>
