@@ -15,6 +15,9 @@
 
     <style>
         /* --- iOS Mirror Finish Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6; /* A very light gray, almost white */
@@ -47,8 +50,8 @@
         .main-container {
             max-width: 800px;
             margin: 0 auto;
-            /* Further increased padding-bottom for more space above the footer */
-            padding-bottom: 320px; 
+            /* Padding for space above the fixed footer bar */
+            padding-bottom: 120px; 
         }
         
         /* Frosted glass effect for components */
@@ -153,6 +156,10 @@
                 </div>
             </div>
         </main>
+
+        <!-- Large spacer div to create empty rows at the bottom -->
+        <div class="h-48"></div>
+
     </div>
 
     <!-- Bottom Icon Bar -->
@@ -232,8 +239,6 @@
                 const icon = header.querySelector('i');
 
                 header.addEventListener('click', () => {
-                    const wasOpen = content.classList.contains('open');
-
                     // Close other open accordions
                     accordionItems.forEach(otherItem => {
                         if (otherItem !== item) {
@@ -249,30 +254,10 @@
                     });
 
                     // Toggle current accordion
-                    content.classList.toggle('open');
-                    const isOpen = content.classList.contains('open');
+                    const isOpen = content.classList.toggle('open');
                     icon.classList.toggle('fa-plus', !isOpen);
                     icon.classList.toggle('fa-minus', isOpen);
                     icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-
-                    // If an item was just opened, intelligently scroll it into view
-                    if (!wasOpen && isOpen) {
-                        setTimeout(() => {
-                            const itemRect = item.getBoundingClientRect();
-                            const footer = document.querySelector('footer');
-                            const footerHeight = footer ? footer.offsetHeight : 80;
-                            const viewportHeight = window.innerHeight;
-
-                            // Check if the bottom of the expanded item is below the top of the footer
-                            if (itemRect.bottom > (viewportHeight - footerHeight)) {
-                                const scrollAmount = itemRect.bottom - (viewportHeight - footerHeight) + 20; // 20px buffer
-                                window.scrollBy({
-                                    top: scrollAmount,
-                                    behavior: 'smooth'
-                                });
-                            }
-                        }, 350); // Delay to allow the CSS transition to begin
-                    }
                 });
             });
 
@@ -297,7 +282,6 @@
                 modal.classList.remove('pointer-events-none');
                 modal.classList.add('opacity-100');
                 modal.classList.remove('opacity-0');
-
                 content.classList.add('scale-100', 'opacity-100');
                 content.classList.remove('scale-95', 'opacity-0');
             }
@@ -306,7 +290,6 @@
                 modal.classList.add('opacity-0');
                 modal.classList.remove('opacity-100');
                 modal.classList.add('pointer-events-none');
-
                 content.classList.remove('scale-100', 'opacity-100');
                 content.classList.add('scale-95', 'opacity-0');
             }
