@@ -100,7 +100,7 @@
 
         <!-- Header: Logo and Title -->
         <header class="text-center py-8">
-            <img src="assets/kkjmp.png" alt="Event Logo" class="mx-auto h-21 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x80/e2e8f0/333?text=Logo';">
+            <img src="assets/kkjmp.png" alt="Event Logo" class="mx-auto h-20 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x80/e2e8f0/333?text=Logo';">
             <h1 class="text-2xl font-bold text-white mt-4">PROGRAM LATIHAN DAN STRATEGI & SOLIDARITI</h1>
             <p class="text-lg text-white mt-2">MEMPERKUAT KESATUAN UNTUK MASA DEPAN</p>
         </header>
@@ -227,6 +227,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // --- Auto-scroll on page load ---
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 200, // Scroll down 200 pixels
+                    behavior: 'smooth'
+                });
+            }, 500); // Wait 500ms before scrolling
+
             // --- Accordion Logic ---
             const accordionItems = document.querySelectorAll('.accordion-item');
 
