@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* --- iOS Mirror Finish Styles --- */
+        /* --- Base Styles --- */
         html {
             scroll-behavior: smooth;
         }
@@ -35,36 +35,21 @@
             height: auto;
             z-index: -100;
             object-fit: cover;
-            filter: brightness(0.9); /* Slightly darken video to improve text readability */
+            filter: brightness(0.9);
         }
 
         .main-container {
             max-width: 800px;
             margin: 0 auto;
-            /* Padding for space above the fixed footer bar */
             padding-bottom: 120px; 
         }
         
-        /* Frosted glass effect for components */
+        /* Frosted glass effect */
         .frosted-glass {
-            background-color: rgba(255, 255, 255, 0.6); /* Slightly more transparent for video background */
+            background-color: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid rgba(209, 213, 219, 0.3);
-        }
-
-        /* Accordion styles */
-        .accordion-item {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s cubic-bezier(0, 1, 0, 1), padding 0.3s ease-in-out;
-        }
-        .accordion-content.open {
-            max-height: 1000px; /* A large enough value */
-            transition: max-height 1s cubic-bezier(1, 0, 1, 0), padding 0.3s ease-in-out;
         }
 
         /* Modal styles */
@@ -75,16 +60,54 @@
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
         }
+        
+        /* --- Scrolling Poster Styles --- */
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                /* Moves the track by the width of the first set of posters */
+                transform: translateX(calc(-250px * 3 - 1.5rem * 3));
+            }
+        }
 
-        /* Glowing effect for the button */
-        @keyframes glowing {
-            0% { box-shadow: 0 0 5px #ec4899, 0 0 10px #ec4899; }
-            50% { box-shadow: 0 0 20px #ec4899, 0 0 30px #ec4899; }
-            100% { box-shadow: 0 0 5px #ec4899, 0 0 10px #ec4899; }
+        .scroller {
+            overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
         }
-        .glowing-button {
-            animation: glowing 2.5s infinite;
+
+        .scroller-track {
+            display: flex;
+            width: calc(250px * 6 + 1.5rem * 6); /* Width for 3 original + 3 duplicate posters */
+            animation: scroll 40s linear infinite;
         }
+        
+        .scroller:hover .scroller-track {
+            animation-play-state: paused;
+        }
+
+        .poster {
+            width: 250px;
+            flex-shrink: 0;
+            border-radius: 1rem; /* 16px */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: block; /* Ensure the anchor tag behaves like a block element */
+        }
+        
+        .poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .poster:hover img {
+            transform: scale(1.05);
+        }
+
     </style>
 </head>
 <body class="antialiased text-gray-800">
@@ -105,51 +128,31 @@
             <p class="text-lg text-white mt-2">MEMPERKUAT KESATUAN UNTUK MASA DEPAN</p>
         </header>
 
-        <!-- Accordion Section for Subjects -->
-        <main class="space-y-4 mt-8">
-            <!-- Accordion Item 1 -->
-            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
-                <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
-                    <h2 class="text-xl font-semibold text-gray-800">Mesyuarat Agong Dwi Tahunan Kesatuan Kebangsaan Juruteknologi Makmal Perubatan</h2>
-                    <i class="fas fa-plus transition-transform duration-300"></i>
-                </button>
-                <div class="accordion-content">
-                    <div class="p-5 pt-0 text-gray-700">
-                        <p>Join us as we exchange vows and begin our new journey together. The ceremony will take place in the beautiful garden, surrounded by nature. Please arrive at least 15 minutes early to find your seat.</p>
-                        <p class="mt-2"><strong>Time:</strong> 2:00 PM</p>
-                        <p><strong>Location:</strong> The Grand Garden Venue</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Accordion Item 2 -->
-            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
-                <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
-                    <h2 class="text-xl font-semibold text-gray-800">Kursus : Strategi & Solidariti: Memperkuat Kesatuan untuk Masa Depan</h2>
-                    <i class="fas fa-plus transition-transform duration-300"></i>
-                </button>
-                <div class="accordion-content">
-                     <div class="p-5 pt-0 text-gray-700">
-                        <p>Let's celebrate! Following the ceremony, please join us for an evening of dinner, drinks, and dancing. Get ready to have a great time and create some wonderful memories with us.</p>
-                        <p class="mt-2"><strong>Time:</strong> 5:00 PM onwards</p>
-                        <p><strong>Location:</strong> The Crystal Ballroom</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Accordion Item 3 -->
-            <div class="accordion-item frosted-glass rounded-xl overflow-hidden">
-                <button class="accordion-header w-full flex justify-between items-center p-5 text-left">
-                    <h2 class="text-xl font-semibold text-gray-800">Night Gala "The Kenduri"</h2>
-                    <i class="fas fa-plus transition-transform duration-300"></i>
-                </button>
-                <div class="accordion-content">
-                    <div class="p-5 pt-2">
-                        <a href="https://anonviranon.github.io/bgm/" target="_blank" rel="noopener noreferrer" 
-                           class="glowing-button block w-full bg-gradient-to-r from-pink-500 via-purple-600 to-black text-white font-bold py-3 px-4 rounded-lg text-center transition-transform hover:scale-105">
-                            Enter The Kenduri
-                        </a>
-                    </div>
+        <!-- Scrolling Posters Section -->
+        <main class="mt-8">
+            <div class="scroller">
+                <div class="scroller-track space-x-6">
+                    <!-- First set of 3 posters, now clickable -->
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_1/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/3498db/ffffff?text=Poster+1" alt="Event Poster 1 - Click to open form">
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_2/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/e74c3c/ffffff?text=Poster+2" alt="Event Poster 2 - Click to open form">
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_3/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/2ecc71/ffffff?text=Poster+3" alt="Event Poster 3 - Click to open form">
+                    </a>
+                    
+                    <!-- Duplicate set for seamless loop -->
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_1/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/3498db/ffffff?text=Poster+1" alt="Event Poster 1 - Click to open form">
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_2/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/e74c3c/ffffff?text=Poster+2" alt="Event Poster 2 - Click to open form">
+                    </a>
+                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_3/viewform" target="_blank" rel="noopener noreferrer" class="poster">
+                        <img src="https://placehold.co/400x600/2ecc71/ffffff?text=Poster+3" alt="Event Poster 3 - Click to open form">
+                    </a>
                 </div>
             </div>
         </main>
@@ -162,15 +165,15 @@
     <!-- Bottom Icon Bar -->
     <footer class="fixed bottom-0 left-0 right-0 frosted-glass">
         <div class="max-w-md mx-auto flex justify-around items-center h-20">
-            <!-- Navigation Icon -->
-            <button id="nav-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                <i class="fas fa-map-location-dot text-2xl"></i>
-                <span class="text-xs mt-1">Directions</span>
-            </button>
             <!-- Tentative Icon -->
             <button id="tentative-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
                 <i class="fas fa-calendar-alt text-2xl"></i>
                 <span class="text-xs mt-1">Tentative</span>
+            </button>
+            <!-- Navigation Icon -->
+            <button id="nav-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
+                <i class="fas fa-map-location-dot text-2xl"></i>
+                <span class="text-xs mt-1">Directions</span>
             </button>
             <!-- RSVP Icon -->
             <button id="rsvp-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
@@ -214,12 +217,12 @@
     <div id="tentative-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
         <div class="frosted-glass rounded-xl w-[90vw] h-[90vh] flex flex-col relative modal-content transform scale-95 opacity-0">
             <!-- Close button for the tentative modal -->
-            <button id="close-tentative-modal" class="absolute top-2 right-2 text-gray-600 hover:text-gray-900 z-10 bg-white/70 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+            <button id="close-tentative-modal" class="absolute top-2 left-2 text-gray-600 hover:text-gray-900 z-10 bg-white/70 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
             <!-- Scrollable content area for the image -->
             <div class="flex-grow overflow-y-auto rounded-xl">
-                <img src="assets/tentative.png" alt="Event Tentative" class="w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/800x1600/e9e9e9/333?text=Event+Itinerary+Image';">
+                <img src="assets/thekenduri.png" alt="The Kenduri Itinerary" class="w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/800x1600/e9e9e9/333?text=The+Kenduri+Itinerary';">
             </div>
         </div>
     </div>
@@ -234,37 +237,6 @@
                     behavior: 'smooth'
                 });
             }, 500); // Wait 500ms before scrolling
-
-            // --- Accordion Logic ---
-            const accordionItems = document.querySelectorAll('.accordion-item');
-
-            accordionItems.forEach(item => {
-                const header = item.querySelector('.accordion-header');
-                const content = item.querySelector('.accordion-content');
-                const icon = header.querySelector('i');
-
-                header.addEventListener('click', () => {
-                    // Close other open accordions
-                    accordionItems.forEach(otherItem => {
-                        if (otherItem !== item) {
-                            const otherContent = otherItem.querySelector('.accordion-content');
-                            if (otherContent.classList.contains('open')) {
-                                otherContent.classList.remove('open');
-                                const otherIcon = otherItem.querySelector('.accordion-header i');
-                                otherIcon.classList.remove('fa-minus');
-                                otherIcon.classList.add('fa-plus');
-                                otherIcon.style.transform = 'rotate(0deg)';
-                            }
-                        }
-                    });
-
-                    // Toggle current accordion
-                    const isOpen = content.classList.toggle('open');
-                    icon.classList.toggle('fa-plus', !isOpen);
-                    icon.classList.toggle('fa-minus', isOpen);
-                    icon.style.transform = isOpen ? 'rotate(180deg)' : 'rotate(0deg)';
-                });
-            });
 
             // --- Modal Logic ---
             const navButton = document.getElementById('nav-button');
