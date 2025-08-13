@@ -10,7 +10,6 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Simple transition for a smoother hover effect */
         .form-card {
             transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
@@ -18,19 +17,25 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
+        /* Loading spinner style */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 sm:p-6 lg:p-8">
 
     <!-- Background Audio Player -->
-    <!-- 
-      Instructions:
-      1. Create a folder named 'assets' in your project directory.
-      2. Place your music file inside the 'assets' folder.
-      3. Make sure the file name matches the 'src' attribute below (e.g., "assets/background-music.mp3").
-      4. The 'controls' attribute is added for testing. You can remove it to hide the player.
-    -->
-    <audio src="assets/background-music.mp3" autoplay loop controls class="hidden"></audio>
+    <audio src="assets/background-music.mp3" autoplay loop class="hidden"></audio>
 
     <div class="max-w-7xl mx-auto">
         <!-- Header -->
@@ -43,7 +48,7 @@
         <div id="forms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
             <!-- Card 1: BGM (Annual Meeting) -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+            <a id="form-card-1" href="https://docs.google.com/forms/d/e/1FAIpQLSe_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
                 <div class="flex flex-col items-start h-full">
                     <div class="bg-indigo-100 dark:bg-indigo-900 p-4 rounded-lg mb-4">
                         <svg class="w-10 h-10 text-indigo-500 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -51,16 +56,16 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">BGM</h2>
-                    <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">1,204</p>
+                    <p class="response-count text-3xl font-bold text-indigo-600 dark:text-indigo-400"><div class="loader"></div></p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
                     <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
-                        <p>Last response: Aug 12, 2025, 10:15 PM</p>
+                        <p class="last-response">Fetching data...</p>
                     </div>
                 </div>
             </a>
 
             <!-- Card 2: Kursus -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+            <a id="form-card-2" href="https://docs.google.com/forms/d/e/1FAIpQLSf_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
                 <div class="flex flex-col items-start h-full">
                     <div class="bg-green-100 dark:bg-green-900 p-4 rounded-lg mb-4">
                         <svg class="w-10 h-10 text-green-500 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -68,16 +73,16 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Kursus</h2>
-                    <p class="text-3xl font-bold text-green-600 dark:text-green-400">873</p>
+                    <p class="response-count text-3xl font-bold text-green-600 dark:text-green-400"><div class="loader"></div></p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
                     <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
-                        <p>Last response: Aug 13, 2025, 09:30 AM</p>
+                        <p class="last-response">Fetching data...</p>
                     </div>
                 </div>
             </a>
 
             <!-- Card 3: Night Gala -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+            <a id="form-card-3" href="https://docs.google.com/forms/d/e/1FAIpQLSc_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
                 <div class="flex flex-col items-start h-full">
                     <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg mb-4">
                         <svg class="w-10 h-10 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -85,16 +90,16 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Night Gala</h2>
-                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">98</p>
+                    <p class="response-count text-3xl font-bold text-blue-600 dark:text-blue-400"><div class="loader"></div></p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
                     <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
-                        <p>Last response: Aug 11, 2025, 05:45 PM</p>
+                        <p class="last-response">Fetching data...</p>
                     </div>
                 </div>
             </a>
 
             <!-- Card 4: All Events Booking -->
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+            <a id="form-card-4" href="https://docs.google.com/forms/d/e/1FAIpQLSd_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
                 <div class="flex flex-col items-start h-full">
                     <div class="bg-yellow-100 dark:bg-yellow-900 p-4 rounded-lg mb-4">
                         <svg class="w-10 h-10 text-yellow-500 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -102,10 +107,10 @@
                         </svg>
                     </div>
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">All Events Booking</h2>
-                    <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">452</p>
+                    <p class="response-count text-3xl font-bold text-yellow-600 dark:text-yellow-400"><div class="loader"></div></p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
                     <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
-                        <p>Last response: Aug 13, 2025, 11:02 AM</p>
+                        <p class="last-response">Fetching data...</p>
                     </div>
                 </div>
             </a>
@@ -113,6 +118,120 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- CONFIGURATION ---
+            // 1. Replace with your actual Google API Key
+            const API_KEY = 'YOUR_API_KEY_HERE';
+
+            // 2. Replace with your Google Sheet IDs
+            const FORM_CONFIG = [
+                {
+                    cardId: 'form-card-1',
+                    sheetId: 'YOUR_SHEET_ID_FOR_BGM_HERE'
+                },
+                {
+                    cardId: 'form-card-2',
+                    sheetId: 'YOUR_SHEET_ID_FOR_KURSUS_HERE'
+                },
+                {
+                    cardId: 'form-card-3',
+                    sheetId: 'YOUR_SHEET_ID_FOR_NIGHT_GALA_HERE'
+                },
+                {
+                    cardId: 'form-card-4',
+                    sheetId: 'YOUR_SHEET_ID_FOR_ALL_EVENTS_HERE'
+                }
+            ];
+
+            // --- SCRIPT LOGIC ---
+
+            /**
+             * Fetches data from a specific Google Sheet.
+             * @param {string} sheetId - The ID of the Google Sheet.
+             * @returns {Promise<object>} - A promise that resolves with the sheet data.
+             */
+            async function fetchSheetData(sheetId) {
+                // We only need the first column to get the count and last timestamp
+                const range = 'A:A'; 
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${range}?key=${API_KEY}`;
+                
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    return data;
+                } catch (error) {
+                    console.error('Error fetching sheet data:', error);
+                    return null; // Return null on error
+                }
+            }
+
+            /**
+             * Updates a card with the fetched data.
+             * @param {HTMLElement} cardElement - The card element to update.
+             * @param {object} data - The data from the Google Sheet API.
+             */
+            function updateCard(cardElement, data) {
+                const responseCountEl = cardElement.querySelector('.response-count');
+                const lastResponseEl = cardElement.querySelector('.last-response');
+
+                if (!data || !data.values) {
+                    responseCountEl.textContent = 'Error';
+                    lastResponseEl.textContent = 'Could not fetch data.';
+                    return;
+                }
+                
+                // The first row is the header, so we subtract it from the count.
+                const responseCount = data.values.length > 1 ? data.values.length - 1 : 0;
+                
+                // Get the last timestamp from the first column of the last row.
+                const lastTimestamp = responseCount > 0 ? data.values[data.values.length - 1][0] : 'No responses yet.';
+
+                // Format the timestamp for better readability
+                let formattedDate = 'N/A';
+                if (responseCount > 0) {
+                   try {
+                     const date = new Date(lastTimestamp);
+                     formattedDate = date.toLocaleString('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                     });
+                   } catch(e) {
+                        formattedDate = lastTimestamp; // Fallback to raw timestamp if parsing fails
+                   }
+                }
+
+                responseCountEl.textContent = responseCount.toLocaleString();
+                lastResponseEl.textContent = `Last response: ${formattedDate}`;
+            }
+
+            /**
+             * Initializes the dashboard by fetching data for all configured forms.
+             */
+            function initializeDashboard() {
+                FORM_CONFIG.forEach(config => {
+                    const cardElement = document.getElementById(config.cardId);
+                    if (cardElement) {
+                        fetchSheetData(config.sheetId).then(data => {
+                            updateCard(cardElement, data);
+                        });
+                    }
+                });
+            }
+
+            // Start the process
+            initializeDashboard();
+
+            // Optional: Refresh data every 5 minutes (300000 milliseconds)
+            setInterval(initializeDashboard, 300000);
+        });
+    </script>
 </body>
 </html>
-
