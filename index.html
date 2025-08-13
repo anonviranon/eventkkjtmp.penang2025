@@ -121,26 +121,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // --- CONFIGURATION ---
-            // 1. Replace with your actual Google API Key
-            const API_KEY = 'YOUR_API_KEY_HERE';
+            const API_KEY = 'AIzaSyBr10obbPmWZKu8y_tvp-xqhfH9r64NaW8';
 
-            // 2. Replace with your Google Sheet IDs
             const FORM_CONFIG = [
                 {
                     cardId: 'form-card-1',
-                    sheetId: 'YOUR_SHEET_ID_FOR_BGM_HERE'
+                    sheetId: '1DcIQUvCUOLNxy4EhrBt64gNe0YLGAGc5JL53w7idmqY'
                 },
                 {
                     cardId: 'form-card-2',
-                    sheetId: 'YOUR_SHEET_ID_FOR_KURSUS_HERE'
+                    sheetId: '1o48r8mDGTAh8uJZqqv4OAWdGDWJAD4qUCt3UfSkyI7E'
                 },
                 {
                     cardId: 'form-card-3',
-                    sheetId: 'YOUR_SHEET_ID_FOR_NIGHT_GALA_HERE'
+                    sheetId: '1mnLBSDFO8LUtXtMnjOHO-lf6KyVWz76flqortwXyoRw'
                 },
                 {
                     cardId: 'form-card-4',
-                    sheetId: 'YOUR_SHEET_ID_FOR_ALL_EVENTS_HERE'
+                    sheetId: '1FLt9XD8p2rBaNHcp8bjph_f1GwJYHh8LOTCMiu5ec5Y'
                 }
             ];
 
@@ -164,7 +162,7 @@
                     const data = await response.json();
                     return data;
                 } catch (error) {
-                    console.error('Error fetching sheet data:', error);
+                    console.error('Error fetching sheet data for sheet:', sheetId, error);
                     return null; // Return null on error
                 }
             }
@@ -235,3 +233,4 @@
     </script>
 </body>
 </html>
+
