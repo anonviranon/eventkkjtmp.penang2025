@@ -3,302 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Dashboard</title>
-    <!-- Tailwind CSS for styling -->
+    <title>Google Form Response Monitor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
     <style>
-        /* --- Base Styles --- */
-        html {
-            scroll-behavior: smooth;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow-x: hidden;
         }
-
-        /* Background Video Styling */
-        #bg-video {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            z-index: -100;
-            object-fit: cover;
-            filter: brightness(0.9);
+        /* Simple transition for a smoother hover effect */
+        .form-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         }
-
-        .main-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding-bottom: 120px; 
+        .form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
-        
-        /* Frosted glass effect */
-        .frosted-glass {
-            background-color: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(209, 213, 219, 0.3);
-        }
-
-        /* Modal styles */
-        .modal-backdrop {
-            transition: opacity 0.3s ease-in-out;
-        }
-        .modal-content {
-            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-        
-        /* --- Scrolling Poster Styles --- */
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                /* Moves the track by the width of the first set of posters */
-                transform: translateX(calc(-250px * 3 - 1.5rem * 3));
-            }
-        }
-
-        .scroller {
-            overflow: hidden;
-            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
-        }
-
-        .scroller-track {
-            display: flex;
-            width: calc(250px * 6 + 1.5rem * 6); /* Width for 3 original + 3 duplicate posters */
-            animation: scroll 40s linear infinite;
-        }
-        
-        .scroller:hover .scroller-track {
-            animation-play-state: paused;
-        }
-
-        .poster {
-            width: 250px;
-            flex-shrink: 0;
-            border-radius: 1rem; /* 16px */
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-            overflow: hidden;
-            display: block; /* Ensure the anchor tag behaves like a block element */
-        }
-        
-        .poster img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        .poster:hover img {
-            transform: scale(1.05);
-        }
-
     </style>
 </head>
-<body class="antialiased text-gray-800">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-4 sm:p-6 lg:p-8">
 
-    <!-- Background Video -->
-    <video autoplay muted loop playsinline id="bg-video">
-        <source src="assets/bg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+    <!-- Background Audio Player -->
+    <!-- 
+      Instructions:
+      1. Create a folder named 'assets' in your project directory.
+      2. Place your music file inside the 'assets' folder.
+      3. Make sure the file name matches the 'src' attribute below (e.g., "assets/background-music.mp3").
+      4. The 'controls' attribute is added for testing. You can remove it to hide the player.
+    -->
+    <audio src="assets/background-music.mp3" autoplay loop controls class="hidden"></audio>
 
-    <!-- Main Content Container -->
-    <div class="main-container p-4 md:p-6">
-
-        <!-- Header: Logo and Title -->
-        <header class="text-center py-8">
-            <img src="assets/kkjmp.png" alt="Event Logo" class="mx-auto h-20 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/100x80/e2e8f0/333?text=Logo';">
-            <h1 class="text-2xl font-bold text-white mt-4">PROGRAM LATIHAN DAN STRATEGI & SOLIDARITI</h1>
-            <p class="text-lg text-white mt-2">MEMPERKUAT KESATUAN UNTUK MASA DEPAN</p>
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white">Form Response Dashboard</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-2">Live monitoring of your Google Forms.</p>
         </header>
 
-        <!-- Scrolling Posters Section -->
-        <main class="mt-8">
-            <div class="scroller">
-                <div class="scroller-track space-x-6">
-                    <!-- First set of 3 posters, now clickable -->
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_1/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/3498db/ffffff?text=Poster+1" alt="Event Poster 1 - Click to open form">
-                    </a>
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_2/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/e74c3c/ffffff?text=Poster+2" alt="Event Poster 2 - Click to open form">
-                    </a>
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_3/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/2ecc71/ffffff?text=Poster+3" alt="Event Poster 3 - Click to open form">
-                    </a>
-                    
-                    <!-- Duplicate set for seamless loop -->
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_1/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/3498db/ffffff?text=Poster+1" alt="Event Poster 1 - Click to open form">
-                    </a>
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_2/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/e74c3c/ffffff?text=Poster+2" alt="Event Poster 2 - Click to open form">
-                    </a>
-                    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID_3/viewform" target="_blank" rel="noopener noreferrer" class="poster">
-                        <img src="https://placehold.co/400x600/2ecc71/ffffff?text=Poster+3" alt="Event Poster 3 - Click to open form">
-                    </a>
+        <!-- Forms Grid -->
+        <div id="forms-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Card 1: BGM (Annual Meeting) -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+                <div class="flex flex-col items-start h-full">
+                    <div class="bg-indigo-100 dark:bg-indigo-900 p-4 rounded-lg mb-4">
+                        <svg class="w-10 h-10 text-indigo-500 dark:text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm6-11a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">BGM</h2>
+                    <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">1,204</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
+                        <p>Last response: Aug 12, 2025, 10:15 PM</p>
+                    </div>
                 </div>
-            </div>
-        </main>
+            </a>
 
-        <!-- Large spacer div to create empty rows at the bottom -->
-        <div class="h-48"></div>
+            <!-- Card 2: Kursus -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+                <div class="flex flex-col items-start h-full">
+                    <div class="bg-green-100 dark:bg-green-900 p-4 rounded-lg mb-4">
+                        <svg class="w-10 h-10 text-green-500 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 1.085-1.085-1.085m1.085 1.085L5.25 16.5m7.5 0H3.75m14.25-13.5v11.25c0 .621-.504 1.125-1.125 1.125h-2.25" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Kursus</h2>
+                    <p class="text-3xl font-bold text-green-600 dark:text-green-400">873</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
+                        <p>Last response: Aug 13, 2025, 09:30 AM</p>
+                    </div>
+                </div>
+            </a>
 
-    </div>
+            <!-- Card 3: Night Gala -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+                <div class="flex flex-col items-start h-full">
+                    <div class="bg-blue-100 dark:bg-blue-900 p-4 rounded-lg mb-4">
+                        <svg class="w-10 h-10 text-blue-500 dark:text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.572L16.5 21.75l-.398-1.178a3.375 3.375 0 00-2.3-2.3L12.75 18l1.178-.398a3.375 3.375 0 002.3-2.3L16.5 14.25l.398 1.178a3.375 3.375 0 002.3 2.3l1.178.398-1.178.398a3.375 3.375 0 00-2.3 2.3z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Night Gala</h2>
+                    <p class="text-3xl font-bold text-blue-600 dark:text-blue-400">98</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
+                        <p>Last response: Aug 11, 2025, 05:45 PM</p>
+                    </div>
+                </div>
+            </a>
 
-    <!-- Bottom Icon Bar -->
-    <footer class="fixed bottom-0 left-0 right-0 frosted-glass">
-        <div class="max-w-md mx-auto flex justify-around items-center h-20">
-            <!-- Tentative Icon -->
-            <button id="tentative-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                <i class="fas fa-calendar-alt text-2xl"></i>
-                <span class="text-xs mt-1">Tentative</span>
-            </button>
-            <!-- Navigation Icon -->
-            <button id="nav-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                <i class="fas fa-map-location-dot text-2xl"></i>
-                <span class="text-xs mt-1">Directions</span>
-            </button>
-            <!-- RSVP Icon -->
-            <button id="rsvp-button" class="flex flex-col items-center text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                <i class="fas fa-envelope-open-text text-2xl"></i>
-                <span class="text-xs mt-1">RSVP</span>
-            </button>
-        </div>
-    </footer>
+            <!-- Card 4: All Events Booking -->
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_.../viewform" target="_blank" class="form-card block bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden p-6">
+                <div class="flex flex-col items-start h-full">
+                    <div class="bg-yellow-100 dark:bg-yellow-900 p-4 rounded-lg mb-4">
+                        <svg class="w-10 h-10 text-yellow-500 dark:text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                           <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 6v.75m0 3v.75m0 3v.75m0 3V18m-9-5.25h5.25M7.5 15h3M3.375 5.25c-.621 0-1.125.504-1.125 1.125v3.026a2.999 2.999 0 0 1 0 5.198v3.026c0 .621.504 1.125 1.125 1.125h17.25c.621 0 1.125-.504 1.125-1.125v-3.026a2.999 2.999 0 0 1 0-5.198V6.375c0-.621-.504-1.125-1.125-1.125H3.375Z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">All Events Booking</h2>
+                    <p class="text-3xl font-bold text-yellow-600 dark:text-yellow-400">452</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-4">Total Responses</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 dark:border-gray-700 w-full text-sm text-gray-600 dark:text-gray-300">
+                        <p>Last response: Aug 13, 2025, 11:02 AM</p>
+                    </div>
+                </div>
+            </a>
 
-    <!-- Modals -->
-    <!-- Navigation Modal -->
-    <div id="nav-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="frosted-glass rounded-xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
-            <h3 class="text-xl font-bold mb-4">Get Directions</h3>
-            <p class="text-gray-600 mb-6">Open location in your favorite maps app.</p>
-            <div class="space-y-3">
-                <a href="https://maps.google.com/?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA" target="_blank" class="block w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200">Google Maps</a>
-                <a href="https://waze.com/ul?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA" target="_blank" class="block w-full bg-cyan-500 text-white font-semibold py-3 rounded-lg hover:bg-cyan-600 transition-colors duration-200">Waze</a>
-                <a href="https://maps.apple.com/?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA" target="_blank" class="block w-full bg-gray-800 text-white font-semibold py-3 rounded-lg hover:bg-gray-900 transition-colors duration-200">Apple Maps</a>
-            </div>
-            <button id="close-nav-modal" class="mt-6 text-gray-500 hover:text-gray-800">Close</button>
-        </div>
-    </div>
-
-    <!-- RSVP Modal -->
-    <div id="rsvp-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="frosted-glass rounded-xl w-full max-w-sm p-6 text-center modal-content transform scale-95 opacity-0">
-            <h3 class="text-xl font-bold mb-4">RSVP for Events</h3>
-            <p class="text-gray-600 mb-6">Please let us know if you can make it!</p>
-            <div class="space-y-3">
-                <!-- Replace '#' with your actual Google Sheet links -->
-                <a href="#" target="_blank" class="block w-full bg-green-500 text-white font-semibold py-3 rounded-lg hover:bg-green-600 transition-colors duration-200">Welcome Dinner</a>
-                <a href="#" target="_blank" class="block w-full bg-indigo-500 text-white font-semibold py-3 rounded-lg hover:bg-indigo-600 transition-colors duration-200">Main Event</a>
-                <a href="#" target="_blank" class="block w-full bg-orange-500 text-white font-semibold py-3 rounded-lg hover:bg-orange-600 transition-colors duration-200">Farewell Brunch</a>
-            </div>
-            <button id="close-rsvp-modal" class="mt-6 text-gray-500 hover:text-gray-800">Close</button>
         </div>
     </div>
-
-    <!-- Tentative Modal -->
-    <div id="tentative-modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none modal-backdrop">
-        <div class="frosted-glass rounded-xl w-[90vw] h-[90vh] flex flex-col relative modal-content transform scale-95 opacity-0">
-            <!-- Close button for the tentative modal -->
-            <button id="close-tentative-modal" class="absolute top-2 left-2 text-gray-600 hover:text-gray-900 z-10 bg-white/70 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <!-- Scrollable content area for the image -->
-            <div class="flex-grow overflow-y-auto rounded-xl">
-                <img src="assets/thekenduri.png" alt="The Kenduri Itinerary" class="w-full h-auto" onerror="this.onerror=null;this.src='https://placehold.co/800x1600/e9e9e9/333?text=The+Kenduri+Itinerary';">
-            </div>
-        </div>
-    </div>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Auto-scroll on page load ---
-            setTimeout(() => {
-                window.scrollTo({
-                    top: 200, // Scroll down 200 pixels
-                    behavior: 'smooth'
-                });
-            }, 500); // Wait 500ms before scrolling
-
-            // --- Modal Logic ---
-            const navButton = document.getElementById('nav-button');
-            const rsvpButton = document.getElementById('rsvp-button');
-            const tentativeButton = document.getElementById('tentative-button');
-            
-            const navModal = document.getElementById('nav-modal');
-            const rsvpModal = document.getElementById('rsvp-modal');
-            const tentativeModal = document.getElementById('tentative-modal');
-            
-            const closeNavModal = document.getElementById('close-nav-modal');
-            const closeRsvpModal = document.getElementById('close-rsvp-modal');
-            const closeTentativeModal = document.getElementById('close-tentative-modal');
-
-            const navModalContent = navModal.querySelector('.modal-content');
-            const rsvpModalContent = rsvpModal.querySelector('.modal-content');
-            const tentativeModalContent = tentativeModal.querySelector('.modal-content');
-
-            function openModal(modal, content) {
-                modal.classList.remove('pointer-events-none');
-                modal.classList.add('opacity-100');
-                modal.classList.remove('opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-                content.classList.remove('scale-95', 'opacity-0');
-            }
-
-            function closeModal(modal, content) {
-                modal.classList.add('opacity-0');
-                modal.classList.remove('opacity-100');
-                modal.classList.add('pointer-events-none');
-                content.classList.remove('scale-100', 'opacity-100');
-                content.classList.add('scale-95', 'opacity-0');
-            }
-
-            // Event Listeners for opening modals
-            navButton.addEventListener('click', () => openModal(navModal, navModalContent));
-            rsvpButton.addEventListener('click', () => openModal(rsvpModal, rsvpModalContent));
-            tentativeButton.addEventListener('click', () => openModal(tentativeModal, tentativeModalContent));
-
-            // Event Listeners for closing modals
-            closeNavModal.addEventListener('click', () => closeModal(navModal, navModalContent));
-            closeRsvpModal.addEventListener('click', () => closeModal(rsvpModal, rsvpModalContent));
-            closeTentativeModal.addEventListener('click', () => closeModal(tentativeModal, tentativeModalContent));
-
-            // Close modal by clicking on the backdrop
-            navModal.addEventListener('click', (e) => {
-                if (e.target === navModal) {
-                    closeModal(navModal, navModalContent);
-                }
-            });
-            rsvpModal.addEventListener('click', (e) => {
-                if (e.target === rsvpModal) {
-                    closeModal(rsvpModal, rsvpModalContent);
-                }
-            });
-            tentativeModal.addEventListener('click', (e) => {
-                if (e.target === tentativeModal) {
-                    closeModal(tentativeModal, tentativeModalContent);
-                }
-            });
-        });
-    </script>
 
 </body>
 </html>
+
